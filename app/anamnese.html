@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#2e7d32">
+        <title>Ficha de Anamnese</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="icon" href="data:,">
+        <link rel="manifest" href="manifest.json">
+    </head>
+    <body>
+        <header>
+            <h1>Nova Anamnese</h1>
+            <!--O <nav>, que vem de navegator, pode ser usado no cabeçalho(<header>), no rodapé (<footer>) ou na lateral (<aside>)-->
+            <nav>
+                <a href="index.html">Início</a>
+            </nav>
+        </header>
+
+        <main>    
+
+          <form id="formAnamnese">
+
+            <fieldset>
+                <legend>Dados Pessoais</legend>
+
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="nome" name="nome" required>
+
+                <label for="nascimento">Data de Nascimento:</label>
+                <input type="date" id="nascimento" name="nascimento">
+
+                <label>Sexo:</label>
+                <select id="sexo" name="sexo">
+                    <option value="">Selecione...</option>
+                    <option value="feminino">Feminino</option>
+                    <option value="masculino">Masculino</option>
+                </select>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="paciente@email.com">
+
+                <label for="telefone">Telefone:</label>
+                <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999">
+            </fieldset>
+
+            <fieldset>
+                <legend>Antropometria</legend>
+
+                <label for="peso">Peso (kg):</label>
+                <input type="number" step="0.1" id="peso" name="peso" placeholder="70.5">
+
+                <label for="altura">Altura (cm):</label>
+                <input type="number" id="altura" name="altura" placeholder="175">
+            </fieldset>
+
+            <fieldset>
+                <legend>Histórico Clínico e Hábitos</legend>
+
+                <label for="objetivo">Objetivo:</label>
+                <input type="text" id="objetivo" name="objetivo" placeholder="Ex: Hipertrofia">
+
+                <label for="historicoDoencas">Doenças:</label>
+                <textarea id="historicoDoencas" name="historicoDoencas" rows="4" autocomplete="off"></textarea>
+
+                <label for="medicamentos">Medicamentos ou Suplementos em uso:</label>
+                <textarea id="medicamentos" name="medicamentos" rows="4" autocomplete="off"></textarea>
+            </fieldset>
+
+            <button type="submit">Salvar Anamnese</button>
+            <button type="reset">Limpar Formulário</button>
+
+          </form>  
+        </main>
+
+        <script type="module" src="js/anamnese.js" defer></script>
+    </body>
+</html>

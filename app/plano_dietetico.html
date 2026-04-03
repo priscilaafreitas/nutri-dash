@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#2e7d32">
+    <title>Plano Dietético - NutriDash</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <header>
+        <h1>Plano Dietético</h1>
+        <nav>
+            <a href="index.html">Ínicio</a>
+            <a href="lista_pacientes.html">Meus Pacientes</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="calc-box">
+            <h3>Cálculo Energético</h3>
+            <div id="dadosResumo">
+            </div>
+
+            <div class="input-group">
+                <label>Equação de Cálculo (TMB):</label>
+                <select id="equacaoTMB"> 
+                    <option value="harris">Harris-Benedict (Clássica)</option>
+                    <option value="mifflin">Mifflin-St Jeor (Padrão Ouro)</option>
+                    <option value="cunningham">Cunningham (Requer % Gordura)</option>
+                    <option value="fao">FAO/WHO</option>
+                    <option value="henry">Henry</option>
+                    <option value="schofield">Schofield</option>
+                    <option value="eer">IOM / EER</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Nível de Atividade Física:</label>
+                <select id="fatorAtividade">
+                    <option value="1.2">Sedentário (Pouco ou nenhum exercício)</option>
+                    <option value="1.375">Levemente (Exercício leve 1-3 dias/semana)</option>
+                    <option value="1.55">Moderadamente ativo (Exercício moderado 3-5 dias/semana)</option>
+                    <option value="1.725">Ativo (Exercício intenso 6-7 dias/semana)</option>
+                    <option value="1.9">Altamente ativo (Exercício muito intenso ou trabalho físico pesado)</option>
+                </select>
+            </div>
+
+            <div id="resultado-get">
+                <p>Taxa Metabólica Basal (TMB): <strong id="tmbValor">0</strong> kcal</p>
+                <p>Gasto Energético Total (GET): <strong id="getValor">0</strong> kcal</p>
+            </div>
+        </section>
+
+        <section class="macros-box">
+            <h3>Distribuição de Macronutrientes</h3>
+            <div class="grid-macros">
+                <div>
+                    <label>Proteínas (g/kg):</label>
+                    <input type="number" id="protGKg" value="2.0" step="0.1">
+                </div>
+                <div>
+                    <label>Gorduras (%):</label>
+                    <input type="number" id="gordPerc" value="25">
+                </div>
+            </div>
+            <div class="macros-resultados">
+                <div class="macro-item">
+                    <span>Proteína:</span>
+                    <strong id="resProtG">0</strong>g (<span id="resProtKcal">0</span>kcal)
+                </div>
+                <div class="macro-item">
+                    <span>Gordura:</span>
+                    <strong id="resGordG">0</strong>g (<span id="resGordKcal">0</span>kcal)
+                </div>
+                <div class="macro-item">
+                    <span>Carboidrato:</span>
+                    <strong id="resCarboG">0</strong>g (<span id="resCarboKcal">0</span>kcal)
+                </div>
+            </div>
+            <div style="max-width: 300px; margin: 20px auto;">
+            <canvas id="graficoMacros"></canvas>
+            </div>
+            <button class="btn-sucesso" id="btnSalvarPlano">Salvar Metas do Paciente</button>
+        </section>
+        <section class="dieta-box">
+            <div class="header-dieta">
+                <h3>Plano Alimentar</h3>
+                <button class="btn-refeicao" id="btnAdicionarRefeicao">Nova Refeição</button>
+            </div>
+            <div id="containerRefeicoes"></div>
+            <div class="resumo-dia"></div>
+                <h4>Total do dia vs. Meta</h4>
+                <div id="progressoMacros"></div>
+                <button id="btnImprimirPlano" class="btn-imprimir"> Gerar PDF / Imprimir</button>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/plano_dietetico.js"></script>
+</body>
+</html>

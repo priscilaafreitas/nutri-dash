@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#2e7d32">
+    <title>Meus Pacientes - NutriDash</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <header class="main-header">
+        <h1>Meus Pacientes</h1>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="anamnese.html">Nova Anamnese</a>
+            <a href="alimentos.html">Base de Alimentos</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <table id="tabelaPacientes">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Idade (Nasc.)</th>
+                    <th>Peso (kg)</th>
+                    <th>IMC</th>
+                    <th>Objetivo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="corpoTabelaPacientes">
+                </tbody>
+        </table>
+    </main>
+
+    <script type="module" src="js/lista_pacientes.js"></script>
+</body>
+</html>

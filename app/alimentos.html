@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="theme-color" content="#2e7d32">
+        <title>Base de Alimentos</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="manifest" href="manifest.json">
+    </head>
+    <body>
+        <header class="main-header">
+            <h1>Base de Alimentos</h1>
+                <nav>
+                    <a href="index.html">Início</a>
+                </nav>
+            </header>
+        <h1>Consulta de Alimentos</h1>
+        <input type="text" id="buscaALimentos" placeholder="Digite o nome do alimento...">
+        <button class="btn-buscarAlimentos" id="btnBuscar">Buscar</button>
+        <hr>
+        <table id="tabelaAlimentos">
+            <thead>
+                <tr>
+                    <th>Alimento</th>
+                    <th>Grupo</th>
+                    <th>Unidade (%)</th>
+                    <th>Calorias (kcal)</th>
+                    <th>Proteína (g)</th>
+                    <th>Lipídeos (g)</th>
+                    <th>Colesterol (mg)</th>
+                    <th>Carboidrato (g)</th>
+                    <th>Fibra (g)</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <script type="module" src="js/alimentos.js"></script>
+    </body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "software-nutricao",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "teste": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/priscilaafreitas/software-nutricao.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/priscilaafreitas/software-nutricao/issues"
+  },
+  "homepage": "https://github.com/priscilaafreitas/software-nutricao#readme",
+  "devDependencies": {
+    "electron": "^25.9.8"
+  }
+}

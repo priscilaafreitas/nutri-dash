@@ -1,0 +1,39 @@
+# Pasta de ambientes virtuais do Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Ficheiros do Java (Compilação e IDEs)
+*.class
+*.jar
+*.war
+.project
+.classpath
+.settings/
+bin/
+target/
+
+# Front-End / Node.js
+node_modules/
+.env
+
+# Ficheiros do Sistema Operativo (Linux)
+.DS_Store
+Thumbs.db
+
+# Dados sensíveis de pacientes (JSON local antigo)
+app/data/pacientes.json
+*.json.bak
+
+
+# Tabela TACO
+app/data/alimentos.json
+*.json.bak
+
+# Configurações do Firebase (Chaves de API)
+js/firebase-config.js
+
+# Backups e arquivos temporários do VS Code
+.vscode/
+*.log
