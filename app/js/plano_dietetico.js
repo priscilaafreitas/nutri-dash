@@ -447,7 +447,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             await updateDoc(doc(db, "pacientes", pacienteNome), dadosDoPlano); 
 
 
-            alert("Plano de " + pacienteNome + " atualizado com sucesso!");
+            alert("Plano de " + paciente.nome + " atualizado com sucesso!");
         } catch (error) {
             console.error("Erro ao salvar no Firebase:" , error);
             alert("Erro ao salvar na nuvem. Verifque sua conexão.");

@@ -33,7 +33,7 @@ async function carregarLista() {
             <td>${p.objetivo || '--'}</td>
             <td>
                 <button class="btn-plano" onclick="irParaPlano('${idPaciente}')">🍎</button>
-                <button class="btn-excluir" onclick="removerPaciente('${idPaciente}')">🗑️</button>
+                <button class="btn-excluir" onclick="removerPaciente('${idPaciente}', '${p.nome || idPaciente}')">🗑️</button>
             </td>
         `;
         tabelaCorpo.appendChild(tr);
@@ -50,8 +50,8 @@ async function carregarLista() {
 }
 
 // Função para remover paciente usando o ID (nome)
-window.removerPaciente = async function (id){
-    if (confirm(`Tem certeza que deseja excluir o paciente ${id}?`)) {
+window.removerPaciente = async function (id, pacienteNome) {
+    if (confirm(`Tem certeza que deseja excluir o paciente ${pacienteNome}?`)) {
         try {
             const { doc, deleteDoc } = await import("https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js");
             await deleteDoc(doc(db, "pacientes", id));
