@@ -50,9 +50,10 @@ async function carregarLista() {
 }
 
 // Função para remover paciente usando o ID (nome)
-async function removerPaciente(id){
+window.removerPaciente = async function (id){
     if (confirm(`Tem certeza que deseja excluir o paciente ${id}?`)) {
         try {
+            const { doc, deleteDoc } = await import("https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js");
             await deleteDoc(doc(db, "pacientes", id));
 
             alert("Paciente removido com sucesso!");
@@ -64,15 +65,16 @@ async function removerPaciente(id){
     }
 }
 
-async function irParaPlano(id) {
+window.irParaPlano = async function (id) {
     try {
         //Busca os dados completos desse paciente específico
+        const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js");
         const docSnap = await getDoc(doc(db, "pacientes", id));
 
         if (docSnap.exists()) {
-            // Armazena no localStorage para a página plano_dietetico.js acessar
+            // Armazena o objeto completo para a página plano_dietetico.js acessar
             localStorage.setItem('pacienteAtivo', JSON.stringify(docSnap.data()));
-            window.location.href = 'plano_dietetico.html'; // Redireciona para a página do plano dietético
+            window.location.href = `plano_dietetico.html?id=${id}`; // Redireciona para a página do plano dietético
         } else {
             alert("Erro ao encontrar dados do paciente.");
         }
@@ -88,8 +90,8 @@ document.addEventListener('DOMContentLoaded', carregarLista);
 // Verifica se o navegador suporta Service Workers
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        // O '../' é vital aqui para sair da pasta 'js' e achar o 'sw.js' na 'app'
-        navigator.serviceWorker.register('../sw.js') 
+        // O './' é vital aqui para sair da pasta 'js' e achar o 'sw.js' na 'app'
+        navigator.serviceWorker.register('./sw.js') 
             .then(reg => console.log('PWA ativo no escopo:', reg.scope))
             .catch(err => console.log('Erro no registro do PWA:', err));
     });

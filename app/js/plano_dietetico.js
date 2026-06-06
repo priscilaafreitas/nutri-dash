@@ -1,7 +1,8 @@
 // Ouve o clique no botão de salvar plano para enviar os dados para o main.js
-const {ipcRenderer} = require('electron');
+import { baseDeAlimentosCompleta } from './alimentos_data.js';
+import { db } from './firebase-config.js';
+
 let meuGrafico = null;
-let listaALimentos = []; // Variável global para guardar a TACO
 
 function inicializarGrafico() {
     const ctx = document.getElementById('graficoMacros').getContext('2d');
@@ -34,7 +35,7 @@ function calcularIdade (dataNascimento) {
         idade--;
     }
     return idade;
-}
+} // Função para calcular idade e fornecê-la em anos.
 
 function calcularTMB (paciente, equacao) {
     const peso = parseFloat(paciente.peso);
@@ -76,16 +77,37 @@ function formatarNutriente(valor) {
     return parseFloat(valor.toString().replace(',','.'));
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Define seletores e elementos utilizados
     const dadosResumo = document.getElementById('dadosResumo');
     const tmbValor = document.getElementById('tmbValor');
-    const getValor = document.getElementById('getValor'); // Pegando o campo do GET
-    const seletorAtividade = document.getElementById('fatorAtividade'); // Pegando o Select pelo ID
-    const seletorEquacao = document.getElementById('equacaoTMB'); // Pega a equação que o nutricionista escolheu no HTML
-    const containerRefeicoes = document.getElementById('containerRefeicoes'); // Container onde as refeições serão adicionadas
-    const btnAddRefeicao = document.getElementById('btnAdicionarRefeicao'); // Botão para adicionar refeição
+    const getValor = document.getElementById('getValor');
+    const fatorAtividade = document.getElementById('fatorAtividade');
+    const equacaoTMB = document.getElementById('equacaoTMB');
+    const containerRefeicoes = document.getElementById('containerRefeicoes');
+    const btnAdicionarRefeicao = document.getElementById('btnAdicionarRefeicao');
+    
+    // Pega o ID da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const pacienteNome = urlParams.get('id');
 
-    const paciente = JSON.parse(localStorage.getItem('pacienteAtivo'));
+    if (!pacienteNome) {
+        alert("Paciente não selecionado!");
+        window.location.href = 'lista_pacientes.html';
+        return;
+    }
+
+    // Busca os dados no Firebase
+    const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js");
+    const docRef = doc(db, "pacientes", pacienteNome);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+        alert("Paciente não encontrado no banco de dados!");
+        return;
+    }
+
+    const paciente = docSnap.data(); // Objeto  'paciente' com dados: peso, altura, nascimento e planoAlimentar.
 
     if (!paciente) {
         dadosResumo.innerHTML = "<p>Nenhum paciente selecionado.</p>";
@@ -94,15 +116,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dadosResumo.innerHTML = `
         <p><strong>Paciente:</strong> ${paciente.nome}</p>
-        <p><strong>Peso:</strong> ${paciente.peso}kg | <strong>Altura:</strong> ${paciente.altura}cm</p>
+        <p><strong>Peso:</strong> ${paciente.peso} kg</p> 
+        <p><strong>Altura:</strong> ${paciente.altura} cm</p>
+        <p><strong>Idade:</strong> ${paciente.nascimento}</p>
     `;
 
-    // Persistência: Carrega valores salvos
+    // Persistência dos dados salvos
     if (paciente.fatorAtividade) {
-        seletorAtividade.value = paciente.fatorAtividade;
+        fatorAtividade.value = paciente.fatorAtividade;
     }
-    if (paciente.equacaoTMB) {
-        seletorEquacao.value = paciente.equacaoTMB;
+    if ( paciente.equacaoTMB) {
+        equacaoTMB.value = paciente.equacaoTMB;
     }
     if (paciente.protGKg) {
         document.getElementById('protGKg').value = paciente.protGKg;
@@ -162,11 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const peso = parseFloat(paciente.peso);
 
         // 2. Chama a função mestre 
-        const tmb = calcularTMB(paciente, seletorEquacao.value);
+        const tmb = calcularTMB(paciente, equacaoTMB.value);
 
 
         // 3. Calcula e atualiza o GET
-        const fator = parseFloat(seletorAtividade.value);
+        const fator = parseFloat(fatorAtividade.value);
         const get = tmb * fator;
 
         // 4. Atualiza TMB e GET na tela
@@ -206,14 +230,10 @@ document.addEventListener('DOMContentLoaded', () => {
             meuGrafico.data.datasets[0].data = [protKcal, gordKcal, carboKcal];
             meuGrafico.update();
         }
+
+        atualizarTotaisDoDia();
     }
 
-    async function carregarBaseAlimentos() {
-        listaALimentos = await ipcRenderer.invoke('obter-alimentos');
-        console.log("TACO carregada!");
-    }
-
-    carregarBaseAlimentos();
 
     // ---FUNÇÃO DE BUSCA E ADIÇÃO DE ALIMENTOS---
     function adicionarLinhaAlimento(corpoTabela, alimento) {
@@ -318,9 +338,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (termo.length < 3) return; // Buscas a partir de 3 letras
 
-            const resultados = listaALimentos.filter(a =>
+            const resultados = baseDeAlimentosCompleta.filter(a =>
                 a.nome_alimento.toLowerCase().includes(termo)
-            ).slice(0, 5); //Mostra apenas 5 primeiros
+            ).slice(0, 8); //Mostra apenas 8 primeiros alimentos encontrados
 
             resultados.forEach(alimento => {
                 const item = document.createElement('div');
@@ -375,8 +395,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     // "Ouve" quando você muda a opção no Select
-    seletorAtividade.addEventListener('change', calcularTudo);
-    seletorEquacao.addEventListener('change', calcularTudo);
+    fatorAtividade.addEventListener('change', calcularTudo);
+    equacaoTMB.addEventListener('change', calcularTudo);
     document.getElementById('protGKg').addEventListener('input', calcularTudo); // Ouve mudanças no campo de proteína por kg
     document.getElementById('gordPerc').addEventListener('input', calcularTudo); // Ouve mudanças no campo de gordura percentual
 
@@ -409,10 +429,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         })
 
-        const planoCompleto = {
+        const dadosDoPlano = {
             id: paciente.nome, // Para saber quem vamos atualizar
-            equacaoTMB: seletorEquacao.value,
-            fatorAtividade: seletorAtividade.value,
+            equacaoTMB: equacaoTMB.value,
+            fatorAtividade: fatorAtividade.value,
             protGKg: document.getElementById('protGKg').value,
             gordPerc: document.getElementById('gordPerc').value,
             planoAlimentar: listaRefeicoesParaSalvar, // Aqui enviamos as refeições
@@ -421,22 +441,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Carrega as ferramentas de escrita do Firebase
-            const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js");
+            const { doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js");
 
             // Salva no Firestore: Coleção "pacientes" documento com o nome do paciente
-            await setDoc(doc(window.db, "pacientes", paciente.nome), planoCompleto); 
+            await updateDoc(doc(db, "pacientes", pacienteNome), dadosDoPlano); 
 
-            const pacienteAtualizado = { ...paciente, ...planoCompleto };
-        localStorage.setItem('pacienteAtivo', JSON.stringify(pacienteAtualizado));
 
-        alert("Plano salvo na nuvem com sucesso!");
+            alert("Plano de " + pacienteNome + " atualizado com sucesso!");
         } catch (error) {
             console.error("Erro ao salvar no Firebase:" , error);
             alert("Erro ao salvar na nuvem. Verifque sua conexão.");
         } 
     });
 
-    btnAddRefeicao.addEventListener('click', () => {
+    btnAdicionarRefeicao.addEventListener('click', () => {
         criarCardRefeicao("Nova Refeição");
     }); 
 
