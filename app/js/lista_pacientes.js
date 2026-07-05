@@ -84,10 +84,7 @@ window.irParaPlano = async function (id) {
     }
 }
 
-// Adiciona um observador de Autenticação
-import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-
-const auth = getAuth();
+// Adiciona um observador de Autenticação e avisa o app quando a autenticação é validada na nuvem
 
 // Avisa o app quando a autenticação é validada na nuvem
 onAuthStateChanged(auth, (user) => {
