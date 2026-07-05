@@ -27,6 +27,7 @@
 - [ ] Adicionar validador de exclusão de planos ou alimentos para evitar ações acidentais
 - [ ] Criar "Cabeçalho de consultório" personalizado (nome e espaço para data)
 - [ ] Cada seção (plano dietético, base de alimentos, pacientes e anamnese) devem ser exibidos como pop-up
+- [ ] Adicionar outras tabelas de alimentos, pois a TACO está desatualizada
 
 ## 📱 Portabilidade (Mobile)
 - [x] Criar conta no Firebase: criar um projeto "Nutribash".
