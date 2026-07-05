@@ -83,16 +83,15 @@ window.irParaPlano = async function (id) {
     }
 }
 
-// Carrega assim que a página abre
-document.addEventListener('DOMContentLoaded', carregarLista);
+// Adiciona um observador de Autenticação
+import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 
-// --- Registro do Service Worker ---
-// Verifica se o navegador suporta Service Workers
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        // O './' é vital aqui para sair da pasta 'js' e achar o 'sw.js' na 'app'
-        navigator.serviceWorker.register('./sw.js') 
-            .then(reg => console.log('PWA ativo no escopo:', reg.scope))
-            .catch(err => console.log('Erro no registro do PWA:', err));
-    });
-}
+const auth = getAuth();
+
+// Avisa o app quando a autenticação é validada na nuvem
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log("Usuário autenticado com sucesso! Carregando dados...");
+        carregarLista(); // Chama a função para carregar a lista de pacientes
+    }
+})
