@@ -1,6 +1,7 @@
     // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
   import { getFirestore } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js"; // Importa ferramenta de Autenticação
 
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -19,8 +20,20 @@
 
   // Initialize Firestore
   const db = getFirestore(app);
+  // Initialize Firebase Authentication
+  const auth = getAuth(app);
+
+  // EXecuta o login anõnimo para que o usuário possa acessar o banco de dados
+  signInAnonymously(auth)
+    .then(() => {
+      console.log("Autenticado anonimamente com sucesso!");
+    })
+    .catch((error) => {
+      console.error("Erro ao autenticar anonimamente:", error);
+    });
 
   // Exporta para que outros arquivos possam usar
-  export { db };
+  export { db, auth };
 
   console.log("NutriDash Conectado: Banco de Dados pronto!");
+  console.log("NutriDash Conectado: Autenticação pronta!");
