@@ -18,6 +18,7 @@
 - [x] Gatilho de impressão via window.print()
 - [x] Ajustar ícones das seções
 - [x] Imprimir PDF com nome de documento personalizado
+- [x] Criar conta no Firebase: criar um projeto "Nutribash".
 
 
 ## 📅 Backlog (A fazer)
@@ -28,7 +29,7 @@
 - [ ] Cada seção (plano dietético, base de alimentos, pacientes e anamnese) devem ser exibidos como pop-up
 
 ## 📱 Portabilidade (Mobile)
-- [ ] Criar conta no Firebase: criar um projeto "Nutribash".
-- [ ] Substituir ipcRenderer: trocar as chamadas do Electron por funções do Firebase (collection, addDoc, getDocs).
-- [ ] Criar o manifest.json: é o arquivo que diz ao tablet: "Eu sou um app, pode me adicionar na tela inicial".
+- [x] Criar conta no Firebase: criar um projeto "Nutribash".
+- [x] Substituir ipcRenderer: trocar as chamadas do Electron por funções do Firebase (collection, addDoc, getDocs).
+- [x] Criar o manifest.json: é o arquivo que diz ao tablet: "Eu sou um app, pode me adicionar na tela inicial".
 - [ ] Hospedagem: usar o Vercel ou GitHub Pages (grátis) para colocar o site no ar
