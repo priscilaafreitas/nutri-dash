@@ -31,8 +31,6 @@ app/data/pacientes.json
 app/data/alimentos.json
 *.json.bak
 
-# Configurações do Firebase (Chaves de API)
-js/firebase-config.js
 
 # Backups e arquivos temporários do VS Code
 .vscode/
