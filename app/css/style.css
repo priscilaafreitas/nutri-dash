@@ -293,14 +293,18 @@ tr:hover {
     .btn-remover-alimento,
     .btn-add-alimento,
     .busca-alimento-container,
-    .lista-sugestoes {
+    .lista-sugestoes, nav {
         display: none !important;
     }
+
+    /* -- Remove informações do navegador -- */
+    
 
     /* Remove fundos cinzas e sombras para economizar tinta*/
     body {
         background: white !important;
         color: black !important;
+        margin-bottom: 60px; /* Espaço para o rodapé de impressão */
     }
 
     .card-refeiçao {
@@ -323,4 +327,30 @@ tr:hover {
         max-width: 300px;
         margin: 0 auto;
     }
+
+    /* -- Configurações para impressão do documento -- */
+    .print-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        color: #555;
+        border-top: 1px solid #ddd;
+        padding-top: 8px;
+        background-color: white;
+    }
+}
+
+/* -- Esconde o rodapé completamente na tela do celular, tablet ou computador --*/
+@media screen {
+    .print-footer {
+        display: none;
+    }
+}
+
+@page {
+    size: auto;   /* auto é o tamanho da página */
+    margin: 20mm; /* margem de impressão */
 }
