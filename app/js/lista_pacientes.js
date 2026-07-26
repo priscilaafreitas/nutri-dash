@@ -8,6 +8,17 @@ import { collection, getDocs , doc , deleteDoc , getDoc  } from "https://www.gst
 // deleteDoc é a função que deleta um documento específico (quando a função removerPaciente é acionada). deleteDoc(doc(db, "pacientes", id)).
 // getDoc busca um único documento específico e retorna um snapshot com os dados. getDoc(doc(db, "pacientes", id)). 
 
+function calcularIdade (dataNascimento) {
+    const hoje = new Date();
+    const nasc = new Date(dataNascimento);
+    let idade = hoje.getFullYear() - nasc.getFullYear();
+    const m = hoje.getMonth() - nasc.getMonth();
+    if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) {
+        idade--;
+    }
+    return idade;
+} // Função para calcular idade e fornecê-la em anos.
+
 async function carregarLista() {
     const tabelaCorpo = document.getElementById('corpoTabelaPacientes');
 
@@ -28,7 +39,7 @@ async function carregarLista() {
             const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${p.nome || idPaciente}</td>
-            <td>${p.nascimento || '--'}</td>
+            <td>${calcularIdade(p.nascimento)}</td>
             <td>${p.peso || '--'} kg</td>
             <td><strong>${p.imc || 'N/D'}</strong></td>
             <td>${p.objetivo || '--'}</td>

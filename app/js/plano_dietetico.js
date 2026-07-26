@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <p><strong>Paciente:</strong> ${paciente.nome}</p>
         <p><strong>Peso:</strong> ${paciente.peso} kg</p> 
         <p><strong>Altura:</strong> ${paciente.altura} cm</p>
-        <p><strong>Idade:</strong> ${paciente.nascimento}</p>
+        <p><strong>Idade:</strong> ${calcularIdade(paciente.nascimento)} anos</p>
     `;
 
     // Persistência dos dados salvos
