@@ -293,7 +293,7 @@ tr:hover {
     .btn-remover-alimento,
     .btn-add-alimento,
     .busca-alimento-container,
-    .lista-sugestoes, nav {
+    .lista-sugestoes, .resumo-dia, nav {
         display: none !important;
     }
 
