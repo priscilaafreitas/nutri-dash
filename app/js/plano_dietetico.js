@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (paciente.planoAlimentar && paciente.planoAlimentar.length > 0) {
         paciente.planoAlimentar.forEach(ref => {
             // Criamos o card usando a função que você já tem
-            criarCardRefeicao(ref.titulo);
+            criarCardRefeicao(ref.titulo, ref.observacoes || '');
 
             // Pegamos o último card criado para adicionar os alimentos nele
             const todosCards = document.querySelectorAll('.card-refeicao');
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     // ---FUNÇÕES PARA GERENCIAR REFEIÇÕES---
-    function criarCardRefeicao(titulo) {
+    function criarCardRefeicao(titulo, observacoes = '') {
         const div = document.createElement('div');
         div.className = 'card-refeicao';
         div.innerHTML = `
@@ -319,6 +319,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <tbody class="corpo-refeicao"></tbody>
             </table>
             <button class="btn-add-alimento">+ Alimento</button>
+             <div class="observacoes-container">
+                <textarea class="textarea-observacoes" placeholder="Observações..." rows="2" style="width: 100%; box-sizing: border-box; resize: vertical; border: 1px solid #ccc; border-radius: 4px; padding: 6px; font-family: inherit;">${observacoes}</textarea>
+            </div>
         `;
         const inputBusca = div.querySelector('.input-busca');
         const listaSugestoes = div.querySelector('.lista-sugestoes');
@@ -406,6 +409,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Percorre cada card de refeição (Café, Almoço, etc)
         document.querySelectorAll('.card-refeicao').forEach(card => {
             const tituloRefeicao = card.querySelector('.input-transparente').value;
+            const observacoesRefeicao = card.querySelector('.textarea-observacoes').value;
             const alimentos = [];
 
             // Percorre cada linha de alimento dentro desta refeição
@@ -425,7 +429,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             listaRefeicoesParaSalvar.push({
                 titulo: tituloRefeicao,
-                alimentos: alimentos
+                alimentos: alimentos,
+                observacoes: observacoesRefeicao
             });
         })
 
